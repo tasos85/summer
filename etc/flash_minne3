@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ "$1" == "" ]; then
+echo Usage: flash_minne3 pathtobinfile
+exit 1
+fi
+
+openocd \
+-f /usr/share/openocd/scripts/interface/openocd-usb.cfg \
+-f /usr/share/openocd/scripts/target/lpc1768.cfg \
+-c "init" \
+-c "targets" \
+-c "soft_reset_halt" \
+-c "halt" \
+-c "flash write_image erase $1 0 bin" \
+-c "reset run" \
+-c "shutdown"
